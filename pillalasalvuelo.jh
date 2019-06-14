@@ -1,0 +1,65 @@
+entity Observatorio {
+    nombre String required,
+	latitud String required, 
+    longitud String required,
+    foto ImageBlob,
+    descripcion String
+}
+
+entity Ave {
+	nombreComun String required,
+    nombreCientifico String required,
+    descripcion String,
+    foto ImageBlob,
+    sonido Blob
+    
+}
+
+entity Avistamiento {
+	nombre String required
+	fecha Instant required,
+    latitud String required,
+    longitud String required,
+    descripcion String
+}
+
+entity Fotografia {
+	nombre String,
+    fichero ImageBlob
+}
+
+relationship OneToMany {
+  	Ave{foto} to Fotografia{ave}
+}
+
+relationship OneToMany {
+  	Avistamiento{foto} to Fotografia{avistamiento}
+}
+
+relationship OneToMany {
+  	Observatorio{observatorio} to Fotografia{observatorio}
+}
+
+relationship OneToMany {
+  	User{fotografia} to Fotografia{usuario}
+}
+
+relationship ManyToMany {
+	Observatorio{ave} to Ave{observatorio}
+}
+
+relationship ManyToMany {
+	Avistamiento{ave} to Ave{avistamiento}
+}
+
+// Set pagination options
+paginate Ave, Observatorio, Fotografia, Avistamiento with pagination
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
